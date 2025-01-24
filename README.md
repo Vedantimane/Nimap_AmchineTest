@@ -18,6 +18,9 @@ This is a simple Spring Boot application that provides CRUD operations for manag
 - **Spring Data JPA**: For repository support and simplifying data access.
 - **Thymeleaf**: If required in the future for rendering dynamic views.
 - **Jackson**: For JSON serialization and deserialization.
+- **Postman**: For API testing.
+- **VSCode**: For writing and managing the code.
+- **MySQL Workbench**: For managing the MySQL database.
 
 ## Requirements
 
@@ -25,6 +28,9 @@ This is a simple Spring Boot application that provides CRUD operations for manag
 - **Spring Boot 2.x**
 - **MySQL** (installed and running locally)
 - **Maven** for building the project
+- **Postman** for API testing
+- **VSCode** (or any other preferred IDE for development)
+- **MySQL Workbench** (or any other MySQL client for managing the database)
 
 ## Getting Started
 
