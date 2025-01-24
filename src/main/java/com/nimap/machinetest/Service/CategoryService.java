@@ -1,9 +1,10 @@
 package com.nimap.machinetest.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nimap.machinetest.Entity.Category;
@@ -16,8 +17,17 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     // Get all categories
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public Page<Category> getAllCategories(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
+    }
+
+    // Get a category by ID
+    public Optional<Category> getCategoryById(Long categoryId) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if (category.isEmpty()) {
+            throw new RuntimeException("Category not found with id: " + categoryId);
+        }
+        return category;
     }
 
     // Save a new category
@@ -26,21 +36,20 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    // Update a category by ID
+    public Category updateCategory(Long categoryId, Category newCategory) {
+        Category oldCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+
+        oldCategory.setName(newCategory.getName());
+        return categoryRepository.save(oldCategory);
+    }
+
     // Delete a category by ID
     public void deleteCategory(Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new RuntimeException("Category not found with id: " + categoryId);
+        }
         categoryRepository.deleteById(categoryId);
-    }
-
-    public Optional<Category> getCategoryById(Long category_id) {
-        return categoryRepository.findById(category_id);
-    }
-
-    public Category updateCategory(Long category_id, Category newCategory) {
-        Category oldCategory = categoryRepository.findById(category_id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + category_id));
-        
-        oldCategory.setName(newCategory.getName());
-
-        return categoryRepository.save(oldCategory);
     }
 }

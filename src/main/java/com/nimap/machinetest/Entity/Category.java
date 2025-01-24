@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Getter
@@ -30,7 +29,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) 
-   @JsonManagedReference
-   private List<Product> products;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Product> products;
 }

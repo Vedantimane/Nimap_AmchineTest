@@ -1,8 +1,6 @@
 package com.nimap.machinetest.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,7 +22,7 @@ import lombok.ToString;
 public class Product {
 
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
 
     private String name;
@@ -33,9 +30,7 @@ public class Product {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "category_id") 
+    @JoinColumn(name = "category_id")
     @JsonBackReference
     private Category category;
-
-    
 }

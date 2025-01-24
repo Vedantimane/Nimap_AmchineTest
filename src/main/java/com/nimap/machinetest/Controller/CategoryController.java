@@ -1,9 +1,10 @@
 package com.nimap.machinetest.Controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,35 +20,37 @@ import com.nimap.machinetest.Service.CategoryService;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
-   
+
     @Autowired
     private CategoryService categoryService;
 
-    // GET all categories
-    @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
-    }
-
-    @GetMapping("/{category_Id}")
-    public Optional<Category> getCategoryById(@PathVariable Long category_Id) {
-        return categoryService.getCategoryById(category_Id);
-    }
-
-    // POST - Create a new category
+    // CREATE - Add a new category
     @PostMapping
     public Category saveCategory(@RequestBody Category category) {
         return categoryService.saveCategory(category);
     }
 
-    // DELETE - Delete a category by ID
-    @DeleteMapping("/{categoryId}")
-    public void deleteCategory(@PathVariable Long categoryId) {
-        categoryService.deleteCategory(categoryId);
+    // READ - Get all categories
+    @GetMapping
+    public Page<Category> getAllCategories(Pageable pageable) {
+        return categoryService.getAllCategories(pageable);
     }
 
-    @PutMapping("/{categoryId}")
-    public Category updateCategory(@PathVariable Long categoryId, @RequestBody Category category ) {
-        return categoryService.updateCategory(categoryId, category);
+    // READ - Get a category by ID
+    @GetMapping("/{category_Id}")
+    public Optional<Category> getCategoryById(@PathVariable Long category_Id) {
+        return categoryService.getCategoryById(category_Id);
+    }
+
+    // UPDATE - Update a category by ID
+    @PutMapping("/{category_Id}")
+    public Category updateCategory(@PathVariable Long category_Id, @RequestBody Category category) {
+        return categoryService.updateCategory(category_Id, category);
+    }
+
+    // DELETE - Delete a category by ID
+    @DeleteMapping("/{category_Id}")
+    public void deleteCategory(@PathVariable Long category_Id) {
+        categoryService.deleteCategory(category_Id);
     }
 }
